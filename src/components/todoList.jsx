@@ -34,9 +34,14 @@ const completed = (id) => {
     setTodo("");
   }
 useEffect(() => {
-  const saved = localStorage.getItem("todo") || [];
+  const saved = localStorage.getItem("todo");
   if (saved) {
-    setTasks(JSON.parse(saved));
+    try {
+      setTasks(JSON.parse(saved));
+    } catch (error) {
+      console.error("Failed to parse todo from localStorage", error);
+      setTasks([]);
+    }
   }
 }, []);
 
